@@ -34,11 +34,9 @@ for post in res.json()["data"]["children"]:
     print(x)
     print(f"""upvotes:{post['data']['ups']}""")
     print("---------------------------------------------------")
-    """
     f = open(f'audios/{x.replace("/"," ")}.txt',"w")
     f.write(x)
     f.close
     t = gTTS(text=x,lang="en")
     t.save(f'audios/{x.replace("/"," ")}.mp3') # the "/" is take as a space, so i replace it
-    """
 
