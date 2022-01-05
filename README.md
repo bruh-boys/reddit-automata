@@ -2,7 +2,7 @@ a simple script for automate getting data from reddit
 
 <h1>Features</h1>
 
-- Download the stories, and save them to txt gile, and convert them to a mp3 file using gTTS
+- Download the stories, and save them to txt file, and convert them to a mp3 file using gTTS
 
 **In a Nutshell🥜**
 ```rs
