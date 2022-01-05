@@ -62,9 +62,11 @@ def main():
         if body == "":
             print("No body")
             body = "No body"
+            history = x
         else:
             print(f"Body length: {len(body)}")
             body = post['data']['selftext']
+            history = x + " " + body
         url_img = post['data']['url']
         if not url_img.endswith(".jpg"):
             print("No image")
@@ -78,7 +80,6 @@ def main():
         with open(f'data/{x.replace("/"," ")}.jpg', 'wb') as out_file:
             shutil.copyfileobj(img.raw, out_file)
         del img
-        history = x + " " + body
         f = open(f'data/{x.replace("/"," ")}.txt', "w")
         f.write(history)
         f.close
