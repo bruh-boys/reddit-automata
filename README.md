@@ -1,10 +1,21 @@
 a simple script for automate getting data from reddit 
 
+<h1>Features</h1>
+
+- Download the stories, and save them to txt gile, and convert them to a mp3 file using gTTS
+
+**In a Nutshell🥜**
+```rs
+bla_bla_bla.txt -> gTTS = bla_bla_bla.mp3 + bla_bla_bla.jpg -> ffmpeg -> bla_bla_bla.mp4
+```
+
 <h1>Want to use it?</h1>
 
-clone the repository
+Clone the repository.
 
-create a .env file with the following data
+Create a .env file with the following data.
+
+You need to have installed ffmpeg,python3, and pip3.
 
 ```
 PASSWORD=
@@ -32,9 +43,9 @@ $ ./ra.py -s "discordapp/hot" -l en
 
 <h1>TODO</h1>
 
-- [] get the data without auth?
+- [ ] get the data without auth?
 
-- [] manage errors
+- [ ] manage errors
 
 
 

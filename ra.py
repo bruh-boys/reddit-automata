@@ -5,6 +5,8 @@ import os
 from gtts import gTTS
 import shutil
 import argparse
+from time import sleep
+from video import video
 
 
 def main():
@@ -36,11 +38,13 @@ def main():
     parser = argparse.ArgumentParser(
         description=
         'Get subreddit posts, and save them in varius formats(mp3, txt, mp4)')
+
     parser.add_argument('-s',
                         '--subreddit',
                         help='subreddit to get posts from',
                         type=str,
                         required=True)
+
     parser.add_argument('-l',
                         '--language',
                         help='language to save the posts in',
@@ -55,8 +59,19 @@ def main():
         print(f"Title: {x}")
         print(f"""upvotes:{post['data']['ups']}""")
         body = post['data']['selftext']
+        if body == "":
+            print("No body")
+            body = "No body"
+        else:
+            print(f"Body length: {len(body)}")
+            body = post['data']['selftext']
         url_img = post['data']['url']
-        print(f"url: {url_img}")
+        if not url_img.endswith(".jpg"):
+            print("No image")
+            url_img = "https://media.discordapp.net/attachments/744419261086433282/928387662283427930/tyler.jpg"
+        else:
+            url_img = post['data']['url']
+            print(f"url: {url_img}")
         res = requests.get(url_img, headers=headers)
         img = requests.get(url_img,
                            stream=True)  # download the image from the url
@@ -72,7 +87,13 @@ def main():
             t.save(f'data/{x.replace("/"," ")}.mp3')
         else:
             print("no text")
+        # if the image doesen't end with .jpg or .png, we replace it with tyler.jpg
+        video(f'data/{x.replace("/"," ")}.jpg',
+              f'data/{x.replace("/"," ")}.mp3',
+              f'data/{x.replace("/"," ")}.mp4')
+        sleep(5)
         print("---------------------------------------------------")
+        #sleep(3600)
 
 
 if __name__ == '__main__':
