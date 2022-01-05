@@ -2,7 +2,7 @@ a simple script for automate getting data from reddit
 
 <h1>Features</h1>
 
-- Download the stories, and save them to txt gile, and convert them to a mp3 file using gTTS
+- Download the stories, and save them to txt file, and convert them to a mp3 file using gTTS
 
 **In a Nutshell🥜**
 ```rs
@@ -40,6 +40,10 @@ $ ./ra.py -s "discordapp/hot" -l en
 
 
 <img src="https://media.discordapp.net/attachments/786759600245309460/928217146654334976/unknown.png?width=223&height=432">
+
+<h1>Example output:</h1>
+
+https://user-images.githubusercontent.com/69026987/148291522-2bf5550d-6bdf-4057-8dba-f179547dff5b.mp4
 
 <h1>TODO</h1>
 
