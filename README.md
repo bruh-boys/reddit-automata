@@ -1,6 +1,4 @@
-a simple script for automate getting audios on reddit threads
-
-doesen't work yet
+a simple script for automate getting audios on reddit publications
 
 create a .env file
 

@@ -27,16 +27,18 @@ headers = {**headers, **{'Authorization': f"bearer {TOKEN}"}}
 # while the token is valid (~2 hours) we just add headers=headers to our requests
 requests.get('https://oauth.reddit.com/api/v1/me', headers=headers)
 
-res = requests.get("https://oauth.reddit.com/r/AskReddit/hot",
+res = requests.get("https://oauth.reddit.com/r/confession/top/?t=all",
                    headers=headers)
 for post in res.json()["data"]["children"]:
     x = post['data']['title']
     print(x)
     print(f"""upvotes:{post['data']['ups']}""")
+    body = post['data']['selftext']
+    history = x+body
     print("---------------------------------------------------")
     f = open(f'audios/{x.replace("/"," ")}.txt',"w")
-    f.write(x)
+    f.write(history)
     f.close
-    t = gTTS(text=x,lang="en")
+    t = gTTS(text=history,lang="en")
     t.save(f'audios/{x.replace("/"," ")}.mp3') # the "/" is take as a space, so i replace it
 
