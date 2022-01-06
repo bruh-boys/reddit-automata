@@ -68,12 +68,15 @@ def main():
             body = post['data']['selftext']
             history = x + " " + body
         url_img = post['data']['url']
-        if not url_img.endswith(".jpg"):
-            print("No image")
+        allow_format = ["jpg", "png", "gif", "jpeg"]
+        if not url_img.endswith(tuple(allow_format)):
+            print("allow formats:", tuple(allow_format))
+            print("No image,using tyler")
             url_img = "https://media.discordapp.net/attachments/744419261086433282/928387662283427930/tyler.jpg"
         else:
             url_img = post['data']['url']
             print(f"url: {url_img}")
+
         res = requests.get(url_img, headers=headers)
         img = requests.get(url_img,
                            stream=True)  # download the image from the url
@@ -88,13 +91,13 @@ def main():
             t.save(f'data/{x.replace("/"," ")}.mp3')
         else:
             print("no text")
-        # if the image doesen't end with .jpg or .png, we replace it with tyler.jpg
         video(f'data/{x.replace("/"," ")}.jpg',
               f'data/{x.replace("/"," ")}.mp3',
               f'data/{x.replace("/"," ")}.mp4')
-        sleep(5)
-        print("---------------------------------------------------")
-        #sleep(3600)
+        print("---------------------------------------------------------")
+        for i in range(5):
+            sleep(1)
+            print(f"new video in:{i+1}")
 
 
 if __name__ == '__main__':

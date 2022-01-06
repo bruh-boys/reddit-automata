@@ -3,7 +3,6 @@ import subprocess
 
 def video(image_file: str, mp3_file: str, video_file: str) -> None:
     # audio.mp3 + image.jpg = video.mp4
-    # check if the jpg file works
     if image_file == "":
         print("no image")
     else:
