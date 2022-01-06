@@ -1,6 +1,8 @@
 
-#sex
-#sex
+# this works for give a limit of words per line
+# if you want to give a limit of characters per line
+# you can use divide_text_width
+
 def divide_text_width(text: str, width: int, text_size: int) -> list:
     output = []
     words = text.split(" ")
@@ -15,6 +17,7 @@ def divide_text_width(text: str, width: int, text_size: int) -> list:
 
     return output
 
+# limit of lines per page
 
 def divide_text_height(text: str, height: int, text_size: int) -> list:
     output = []
@@ -31,7 +34,8 @@ def divide_text_height(text: str, height: int, text_size: int) -> list:
 
     return output
 
-
+# this return you a list with the pages
+# so you can make an animation or something with it
 def divide_text(text: str, width: int, height: int, text_size: int) -> list:
     lin = "\n".join(divide_text_width(text, width, text_size))
 
@@ -39,10 +43,3 @@ def divide_text(text: str, width: int, height: int, text_size: int) -> list:
     return pages
 
 
-f = open("test.txt", "r")
-text = f.read()
-
-lin = "\n".join(divide_text_width(text, 720, 10))
-pages = divide_text_height(lin, 720, 10)
-
-print("\n\n".join(pages))

@@ -1,1 +1,1 @@
-from .parse import *
+from .divide_text import *
