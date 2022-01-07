@@ -6,7 +6,7 @@ from gtts import gTTS
 import shutil
 import argparse
 from time import sleep
-from video import video
+from video import convert_video, download_file
 
 
 def main():
@@ -36,8 +36,7 @@ def main():
 
     # ./ra.py -s subreddit -l language
     parser = argparse.ArgumentParser(
-        description=
-        'Get subreddit posts, and save them in varius formats(mp3, txt, mp4)')
+        description='Get subreddit posts, and save them in varius formats(mp3, txt, mp4)')
 
     parser.add_argument('-s',
                         '--subreddit',
@@ -71,6 +70,7 @@ def main():
         allow_format = ["jpg", "png", "gif", "jpeg"]
         if not url_img.endswith(tuple(allow_format)):
             print("allow formats:", tuple(allow_format))
+            print("url_img:", url_img)
             print("No image,using tyler")
             url_img = "https://media.discordapp.net/attachments/744419261086433282/928387662283427930/tyler.jpg"
         else:
@@ -80,22 +80,28 @@ def main():
         res = requests.get(url_img, headers=headers)
         img = requests.get(url_img,
                            stream=True)  # download the image from the url
-        with open(f'data/{x.replace("/"," ")}.jpg', 'wb') as out_file:
-            shutil.copyfileobj(img.raw, out_file)
-        del img
+        file = f'data/{x.replace("/"," ")}.{url_img.split(".")[-1]}'
+
+        download_file(url_img, file)
+
         f = open(f'data/{x.replace("/"," ")}.txt', "w")
+
         f.write(history)
+
         f.close
+
         t = gTTS(text=history, lang=args.language)
+
         if body != "":
             t.save(f'data/{x.replace("/"," ")}.mp3')
         else:
             print("no text")
-        video(f'data/{x.replace("/"," ")}.jpg',
-              f'data/{x.replace("/"," ")}.mp3',
-              f'data/{x.replace("/"," ")}.mp4')
+        convert_video(file,
+                      f'data/{x.replace("/"," ")}.mp3',
+                      f'data/{x.replace("/"," ")}.mp4')
         print("---------------------------------------------------------")
-        for i in range(5):
+
+        for i in range(3):
             sleep(1)
             print(f"new video in:{i+1}")
 
