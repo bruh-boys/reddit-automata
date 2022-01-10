@@ -1,10 +1,12 @@
-import subprocess
+
 from PIL import Image, ImageDraw, ImageFont
+from divide_text.text import divide_text
+from typing import Tuple
 
 from divide_text.text import divide_text
 from gtts import gTTS
-from os import listdir, popen, remove
-from subprocess import call, Popen
+from os import listdir, remove
+from subprocess import call
 
 
 def clear_directory(directory: str) -> None:
@@ -13,14 +15,14 @@ def clear_directory(directory: str) -> None:
 # this is going to generate the images for then use it for the videos
 
 
-def generate_images(text: str, font_size: str, name: str, width: int, height: int, font_path: str) -> None:
+def generate_images(text: str, font_size: Tuple[int,int], name: str, width: int, height: int, font_path: str) -> None:
     clear_directory("images")
-
-    font = ImageFont.truetype(
-        font_path, font_size)
-
-    pages = divide_text(text, width-font_size,height-font_size, font_size+2)
     
+    (_, h) = font_size
+    font = ImageFont.truetype(
+        font_path, h)
+
+    pages =divide_text(text, width-h*3, height-h*3, font_size)
     for i, page in enumerate(pages):
         img = Image.new('RGB', ( width,height), color=(0, 0, 0))
         img.putalpha(0)
@@ -30,17 +32,18 @@ def generate_images(text: str, font_size: str, name: str, width: int, height: in
 # this is going to generate the audio for the videos
 
 
-def generate_audio(text: str, font_size: str, name: str,width:int, height: int, language) -> None:
+def generate_audio(text: str, font_size: Tuple[int,int], name: str,width:int, height: int, language) -> None:
     clear_directory("audio")
+    (_, h) = font_size
 
-    pages = divide_text(text, width-font_size, height-font_size, font_size+5)
+    pages = divide_text(text, width-h*3, height-h*3, font_size)
 
     for i, page in enumerate(pages):
         gTTS(text=page.replace("\n"," "), lang=language).save("audio/"+name+str(i)+".mp3")
 
 
 # this is going to generate the videos for then join them
-def generate_videos(text: str, font_size: str, name: str, width: int, height: int, font_path: str, language) -> None:
+def generate_videos(text: str, font_size: Tuple[int,int], name: str, width: int, height: int, font_path: str, language) -> None:
     clear_directory("videos")
 
     generate_images(text, font_size, name, width, height, font_path=font_path)
@@ -59,7 +62,7 @@ def generate_videos(text: str, font_size: str, name: str, width: int, height: in
     clear_directory("images")
 
 
-def concat_all(text: str, font_size: str, name: str, width: int, height: int, font_path: str = "font/arial-unicode-ms.ttf", language="en") -> None:
+def concat_all(text: str, font_size: Tuple[int,int], name: str, width: int, height: int, font_path: str = "font/arial-unicode-ms.ttf", language="en") -> None:
 
     generate_videos(text, font_size, name, width, height,
                     font_path=font_path, language=language)
@@ -123,8 +126,8 @@ As for "mistaking" a child choking with hitting, I was downstairs. I couldn't he
 
 So, /u/piconeeks..... anything else you'd like to know? Care to admit I *just might be* telling the truth? There were identify details I left out but guess y'all need them.
 """
-generate_images(test,15,"test",400,300,"font/arial-unicode-ms.ttf")
-
+#generate_images(test,(5,10),"test",400,300,"font/arial-unicode-ms.ttf")
+generate_audio(test,(5,10),"test",400,300,"en")
 """
 clear_directory("videos")
 clear_directory("audio")

@@ -1,4 +1,6 @@
 
+from typing import Tuple
+
 # this works for give a limit of words per line
 # if you want to give a limit of characters per line
 # you can use divide_text_width
@@ -38,10 +40,11 @@ def divide_text_height(text: str, height: int, text_size: int) -> list:
 
 # this return you a list with the pages
 # so you can make an animation or something with it
-def divide_text(text: str, width: int, height: int, text_size: int) -> list:
-    lin = "\n".join(divide_text_width(text, width, text_size))
+def divide_text(text: str, width: int, height: int, text_size: Tuple[int,int]) -> list:
+    width_font_size, height_font_size = text_size
+    lin = "\n".join(divide_text_width(text, width, width_font_size))
 
-    pages = divide_text_height(lin, height, text_size)
+    pages = divide_text_height(lin, height, height_font_size)
  
     return pages
 
