@@ -1,8 +1,12 @@
 .env
 data
 .vscode
+
 images/*.png
 audio/*.mp3
 videos/*.mp4
 video/*.mp4
 video_list.txt
+
+__pycache__
+*.pyc

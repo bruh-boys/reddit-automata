@@ -49,7 +49,7 @@ https://user-images.githubusercontent.com/69026987/148291522-2bf5550d-6bdf-4057-
 
 - [ ] get the data without auth?
 
-- [ ] manage errors
+- [x] manage errors
 
 
 
