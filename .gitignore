@@ -1,3 +1,6 @@
 .env
 data
 .vscode
+images/*.png
+audio/*.mp3
+video/*.mp4
