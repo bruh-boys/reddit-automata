@@ -19,12 +19,12 @@ def generate_images(text: str, font_size: str, name: str, width: int, height: in
     font = ImageFont.truetype(
         font_path, font_size)
 
-    pages = divide_text(text, width-font_size, height-font_size, font_size+2)
+    pages = divide_text(text, width-font_size,height-font_size, font_size+2)
     
     for i, page in enumerate(pages):
         img = Image.new('RGB', ( width,height), color=(0, 0, 0))
         img.putalpha(0)
-        ImageDraw.Draw(img).text((5, 5), page, font=font, fill=(255, 255, 255))
+        ImageDraw.Draw(img).text((0,0), page, font=font, fill=(255, 255, 255))
         img.save("images/"+name+str(i)+".png")
 
 # this is going to generate the audio for the videos
@@ -123,7 +123,7 @@ As for "mistaking" a child choking with hitting, I was downstairs. I couldn't he
 
 So, /u/piconeeks..... anything else you'd like to know? Care to admit I *just might be* telling the truth? There were identify details I left out but guess y'all need them.
 """
-concat_all(test, 15, "test", 400, 300)
+generate_images(test,15,"test",400,300,"font/arial-unicode-ms.ttf")
 
 """
 clear_directory("videos")
