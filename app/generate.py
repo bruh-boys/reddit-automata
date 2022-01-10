@@ -19,7 +19,7 @@ def generate_images(text: str, font_size: str, name: str, width: int, height: in
     font = ImageFont.truetype(
         font_path, font_size)
 
-    pages = divide_text(text, width-font_size, height-font_size, font_size+5)
+    pages = divide_text(text, width-font_size, height-font_size, font_size+2)
     
     for i, page in enumerate(pages):
         img = Image.new('RGB', ( width,height), color=(0, 0, 0))
