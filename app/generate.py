@@ -1,65 +1,80 @@
 import subprocess
 from PIL import Image, ImageDraw, ImageFont
+
 from divide_text.text import divide_text
 from gtts import gTTS
-from os import listdir, popen,remove
-from subprocess import call,Popen
+from os import listdir, popen, remove
+from subprocess import call, Popen
 
-def clear_directory(directory:str)->None:
+
+def clear_directory(directory: str) -> None:
     for file in listdir(directory):
         remove(directory+"/"+file)
 # this is going to generate the images for then use it for the videos
-def generate_images(text:str,font_size:str,name:str,width:int,height:int,font_path:str )->None:
-    clear_directory("images")
-    font=  ImageFont.truetype(
-            font_path, font_size)
-    pages=divide_text(text,width-font_size,height-font_size,font_size+5)
-    for i,page in enumerate(pages):
-        img=Image.new('RGB', (width,height), color = (0,0,0))
-        img.putalpha(0)
-        ImageDraw.Draw(img).text((5,5), page, font=font, fill=(255,255,255))
-        img.save("images/"+name+str(i)+".png")
-   
-# this is going to generate the audio for the videos
-def generate_audio(text:str,font_size:str,name:str,width:int,height:int,language )->None:
-    clear_directory("audio")
-    pages=divide_text(text,width-font_size,height-font_size,font_size+5)
-    for i,page in enumerate(pages):
-        gTTS(text=page, lang=language).save("audio/"+name+str(i)+".mp3")
 
-        
-#this is going to generate the videos for then join them
-def generate_videos(text:str,font_size:str,name:str,width:int,height:int,font_path:str,language)->None:
-    clear_directory("videos")
+
+def generate_images(text: str, font_size: str, name: str, width: int, height: int, font_path: str) -> None:
+    clear_directory("images")
+
+    font = ImageFont.truetype(
+        font_path, font_size)
+
+    pages = divide_text(text, width-font_size, height-font_size, font_size+5)
     
-   
-    generate_images(text,font_size,name,width,height,font_path=font_path)
-    generate_audio(text,font_size,name,width,height,language=language)
-    names=[name+str(i)+"." for i in range(len(listdir("images")))]
-   
-   
- 
+    for i, page in enumerate(pages):
+        img = Image.new('RGB', ( width,height), color=(0, 0, 0))
+        img.putalpha(0)
+        ImageDraw.Draw(img).text((5, 5), page, font=font, fill=(255, 255, 255))
+        img.save("images/"+name+str(i)+".png")
+
+# this is going to generate the audio for the videos
+
+
+def generate_audio(text: str, font_size: str, name: str,width:int, height: int, language) -> None:
+    clear_directory("audio")
+
+    pages = divide_text(text, width-font_size, height-font_size, font_size+5)
+
+    for i, page in enumerate(pages):
+        gTTS(text=page.replace("\n"," "), lang=language).save("audio/"+name+str(i)+".mp3")
+
+
+# this is going to generate the videos for then join them
+def generate_videos(text: str, font_size: str, name: str, width: int, height: int, font_path: str, language) -> None:
+    clear_directory("videos")
+
+    generate_images(text, font_size, name, width, height, font_path=font_path)
+    generate_audio(text, font_size, name,width, height, language=language)
+
+    names = [name+str(i)+"." for i in range(len(listdir("images")))]
+
     for n in names:
         call([
-            "ffmpeg", "-loop", "1", "-i", "images/"+n+"png", "-i","audio/"+n+"mp3", "-c:v",
+            "ffmpeg", "-loop", "1", "-i", "images/" +
+            n+"png", "-i", "audio/"+n+"mp3", "-c:v",
             "libx264", "-tune", "stillimage", "-c:a", "aac", "-b:a", "192k",
             "-shortest", "videos/"+n+"mp4"
         ])
     clear_directory("audio")
-    clear_directory("images") 
-   
-def concat_all(text:str,font_size:str,name:str,width:int,height:int,font_path:str="font/arial-unicode-ms.ttf",language="en" )->None:
-    clear_directory("video")
-    generate_videos(text,font_size,name,width,height,font_path=font_path,language=language)
-    
-    video_paths=["file 'videos/"+name+str(i)+".mp4'\n" for i in range(len(listdir("videos")))]
+    clear_directory("images")
 
-    with open("video_list.txt","w") as f:
+
+def concat_all(text: str, font_size: str, name: str, width: int, height: int, font_path: str = "font/arial-unicode-ms.ttf", language="en") -> None:
+
+    generate_videos(text, font_size, name, width, height,
+                    font_path=font_path, language=language)
+
+    video_paths = ["file 'videos/"+name +
+                   str(i)+".mp4'\n" for i in range(len(listdir("videos")))]
+
+    with open("video_list.txt", "w") as f:
         f.writelines(video_paths)
-    call(["ffmpeg", "-f", "concat", "-i", "video_list.txt", "-c", "copy", "video/"+name+".mp4"])
-    clear_directory("video")
-    
-test="""
+    call(["ffmpeg", "-f", "concat", "-i", "video_list.txt",
+         "-c", "copy", "video/"+name+".mp4"])
+    clear_directory("videos")
+
+
+test = """
 I'm putting my extremely profoundly disabled 7 year old into a residential facility so I can forget he exists. I'm not sorry.I can't tell anyone this, even my therapist. Lambast me if you wanr and maybe I even deserve it. I only ask what you would do if you were in my situation. Not what you think "people should" do. What you would REALLY do. 
 
 I'm a single mom of 2 boys. 12 and 7. My husband passed away 3 years ago in a work accident. A very large portion of me believe it was a suicide. I can't see him EVER making the mistake he made that caused his death, and he had taken an action just before that which ensured his co-workers weren't in the room. I fully believe he killed himself because of our younger son and no one will ever change my mind. 
@@ -108,7 +123,7 @@ As for "mistaking" a child choking with hitting, I was downstairs. I couldn't he
 
 So, /u/piconeeks..... anything else you'd like to know? Care to admit I *just might be* telling the truth? There were identify details I left out but guess y'all need them.
 """
-concat_all(test,15,"test",400,300)
+concat_all(test, 15, "test", 400, 300)
 
 """
 clear_directory("videos")
