@@ -15,35 +15,36 @@ def clear_directory(directory: str) -> None:
 # this is going to generate the images for then use it for the videos
 
 
-def generate_images(text: str, font_size: Tuple[int,int], name: str, width: int, height: int, font_path: str) -> None:
+def generate_images(text: str, font_size: int, name: str, width: int, height: int, font_path: str) -> None:
     clear_directory("images")
     
-    (_, h) = font_size
+    
     font = ImageFont.truetype(
-        font_path, h)
+        font_path, font_size)
 
-    pages =divide_text(text, width-h*3, height-h*3, font_size)
+    pages =divide_text(text, width-font_size*2, height-font_size*2,font_size)
     for i, page in enumerate(pages):
         img = Image.new('RGB', ( width,height), color=(0, 0, 0))
        
-        ImageDraw.Draw(img).text((0,0), page, font=font, fill=(255, 255, 255))
+        ImageDraw.Draw(img).text((font_size,font_size), page, font=font, fill=(255, 255, 255))
         img.save("images/"+name+str(i)+".png")
 
 # this is going to generate the audio for the videos
 
 
-def generate_audio(text: str, font_size: Tuple[int,int], name: str,width:int, height: int, language) -> None:
+def generate_audio(text: str, font_size: int, name: str,width:int, height: int, language) -> None:
     clear_directory("audio")
-    (_, h) = font_size
+  
 
-    pages = divide_text(text, width-h*3, height-h*3, font_size)
+    pages = divide_text(text, width-font_size*2, height-font_size*2, font_size)
+  
 
     for i, page in enumerate(pages):
         gTTS(text=page.replace("\n"," "), lang=language).save("audio/"+name+str(i)+".mp3")
 
 
 # this is going to generate the videos for then join them
-def generate_videos(text: str, font_size: Tuple[int,int], name: str, width: int, height: int, font_path: str, language) -> None:
+def generate_videos(text: str, font_size:int, name: str, width: int, height: int, font_path: str, language) -> None:
     clear_directory("videos")
 
     generate_images(text, font_size, name, width, height, font_path=font_path)
@@ -61,8 +62,8 @@ def generate_videos(text: str, font_size: Tuple[int,int], name: str, width: int,
     clear_directory("images")
 
 
-def concat_all(text: str, font_size: Tuple[int,int], name: str, width: int, height: int, font_path: str = "font/arial-unicode-ms.ttf", language="en") -> None:
-
+def concat_all(text: str, font_size: int, name: str, width: int, height: int, font_path: str = "font/arial-unicode-ms.ttf", language="en") -> None:
+    clear_directory("video")
     generate_videos(text, font_size, name, width, height,
                     font_path=font_path, language=language)
 
@@ -77,19 +78,40 @@ def concat_all(text: str, font_size: Tuple[int,int], name: str, width: int, heig
 
 
 test = """
-October 30th, 2016, Results: Summer Of Code 2016.
-This has been a long time coming but we wanted to give a proper closure to our participation in this run of the program and it takes time. Sometimes it's just to get the final report for each project trimmed down, others, is finalizing whatever was still in progress when the program finished: final patches need to be merged, TODO lists stabilized, future plans agreed; you name it.
-
-Without further ado, here's the silver-lining for each one of the projects we sought to complete during this Summer of Code season:
-
-FFv1 (Mentor: Michael Niedermayer)
-Stanislav Dolganov designed and implemented experimental support for motion estimation and compensation in the lossless FFV1 codec. The design and implementation is based on the snow video codec, which uses OBMC. Stanislav's work proved that significant compression gains can be achieved with inter frame compression. FFmpeg welcomes Stanislav to continue working beyond this proof of concept and bring its advances into the official FFV1 specification within the IETF.
-
-Self test coverage (Mentor: Michael Niedermayer)
-Petru Rares Sincraian added several self-tests to FFmpeg and successfully went through the in-some-cases tedious process of fine tuning tests parameters to avoid known and hard to avoid problems, like checksum mismatches due to rounding errors on the myriad of platforms we support. His work has improved the code coverage of our self tests considerably.
-"""
-#generate_images(test,(5,10),"test",400,300,"font/arial-unicode-ms.ttf")
-concat_all(test,(5,10),"test",400,300)
+Doin your mom doin doin your mom Doin your mom doin doin your mom Doin doin your mom doin doin your mom You know we straight with doin your mom Doin your mom doin doin your mom Doin your mom doin doin your mom Doin doin your mom doin doin your mom You know we straight with doin your mom I'm doin your mom. 
+Yes yours! I first saw her in the Wal-Mart pickin out your drawers. 
+Big Dolly Parton hair like an 80s prom queen But her ass was lookin good all up in those mom-jeans. 
+I approached her in the checkout line, and said yo baby wassup? She had two gallons of milk, and I was starin at her jugs. 
+Five minutes later she agreed to get with me So we went and rocked the minivan like Giggity. 
+Giggity. 
+Giggity. 
+I was ridin your mom like she was Mario Kart. 
+I gave her a lift back to her crib cause her car wouldn't start. 
+She invited me in the house, and we started makin out again. 
+How many times I tap that ass? OVER 9000! Yeah. 
+She called me Pledge cause I knocked the dust off it. 
+She later made me a sandwich and she cut the crust off it. 
+Cause she knows how I like it, and that I'm a little young To be in the bed, butt-naked doin your mom. 
+Doin your mom doin doin your mom Doin your mom doin doin your mom Doin doin your mom doin doin your mom You know we straight with doin your mom Doin your mom doin doin your mom Doin your mom doin doin your mom Doin doin your mom doin doin your mom You know we straight with doin your mom I like your mamas big butt, and I cannot lie. 
+You other brothers can't deny that she's fly. 
+We make sexy time, yes and every night I tap that. 
+She saw me butt-naked, now she thinks I'm half black. 
+But your moms the best, the super M.I.L.F. 
+Cause she loves to toss the salad even though she ain't a chef And I blame it on the al-al-al-cohol But If I were you, I wouldn't kiss your mom on the mouth at all. 
+She likes the Donkey-Punch. 
+She likes the Dirty Sanchez. 
+Sometimes she even likes to fool around in your bed. 
+She likes rough sex with handcuffs and I'll be honest She likes me to Chris Brown her when she acts like Rihanna. 
+She's so therapeutic. 
+When I need to cure my restlessness I br-br-br-br-br-br-br-br motorboat your moms breastestess. 
+I didn't wanna tell you, but I had to write this song Cause I'm in your house every night doin your mo-om. 
+Doin your mom doin doin your mom Doin your mom doin doin your mom Doin doin your mom doin doin your mom You know we straight with doin your mom Doin your mom doin doin your mom Doin your mom doin doin your mom Doin doin your mom doin doin your mom You know we straight with doin your mom I'm havin sex with your mother That makes me better than you. 
+I'm havin sex with your mother That makes me better than you. 
+Doin your mom doin doin your mom Doin your mom doin doin your mom Doin doin your mom doin doin your mom You know we straight with doin your mom Doin your mom doin doin your mom Doin your mom doin doin your mom Doin doin your mom doin doin your mom You know we straight with doin your mom 
+ """
+#print(divide_text(test, 500, 500, 20))
+generate_images(test, 20, "test", 800, 600, font_path="font/arial-unicode-ms.ttf")
+#concat_all(test, 10, "test", 400,300)
 """
 clear_directory("videos")
 clear_directory("audio")
