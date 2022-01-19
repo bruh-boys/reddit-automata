@@ -6,19 +6,33 @@ from gtts import gTTS
 import shutil
 import argparse
 from time import sleep
+from app.generate import concat_all
 from video import convert_video, download_file
+parser = argparse.ArgumentParser(
+        description='Get subreddit posts, and save them in varius formats(mp3, txt, mp4)')
+parser.add_argument('-s',
+                        '--subreddit',
+                        help='subreddit to get posts from',
+                        type=str,
+                        required=True)
+parser.add_argument('-l',
+                    '--language',
+                    help='language to save the posts in',
+                    type=str,
+                    required=True)
+args = parser.parse_args()
 
-
+data = {
+        'grant_type': 'password',
+        'username': os.getenv("REDDIT_USERNAME"),
+        'password': os.getenv("PASSWORD")
+    }
 def main():
     load_dotenv()
     os.system("mkdir -p data")  # create the folder if doesent exists
     auth = requests.auth.HTTPBasicAuth(os.getenv("ID"), os.getenv("SECRET"))
 
-    data = {
-        'grant_type': 'password',
-        'username': os.getenv("REDDIT_USERNAME"),
-        'password': os.getenv("PASSWORD")
-    }
+    
 
     headers = {'User-Agent': 'test/0.0.1'}  # the name of the bot/app
 
@@ -35,21 +49,8 @@ def main():
     requests.get('https://oauth.reddit.com/api/v1/me', headers=headers)
 
     # ./ra.py -s subreddit -l language
-    parser = argparse.ArgumentParser(
-        description='Get subreddit posts, and save them in varius formats(mp3, txt, mp4)')
-
-    parser.add_argument('-s',
-                        '--subreddit',
-                        help='subreddit to get posts from',
-                        type=str,
-                        required=True)
-
-    parser.add_argument('-l',
-                        '--language',
-                        help='language to save the posts in',
-                        type=str,
-                        required=True)
-    args = parser.parse_args()
+   
+   
     res = requests.get(f"https://oauth.reddit.com/r/{args.subreddit}",
                        headers=headers)
 
@@ -96,9 +97,8 @@ def main():
             t.save(f'data/{x.replace("/"," ")}.mp3')
         else:
             print("no text")
-        convert_video(file,
-                      f'data/{x.replace("/"," ")}.mp3',
-                      f'data/{x.replace("/"," ")}.mp4')
+        
+        concat_all(history,10,f'data/{x.replace("/"," ")}.mp4',400,600,language=args.language)
         print("---------------------------------------------------------")
 
         for i in range(3):
