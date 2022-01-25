@@ -1,3 +1,6 @@
+a la mierda esos canales de historias de reddit mal editados donde utilizan el tts de google , chupenme la monda canales de mierda 
+
+
 a simple script for automate getting data from reddit 
 
 <h1>Features</h1>
