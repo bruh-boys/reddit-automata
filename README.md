@@ -6,9 +6,7 @@ a simple script for automate getting data from reddit
 - Download the stories, and save them to txt file, and convert them to a mp3 file using gTTS
 
 **In a Nutshell🥜**
-```rs
-bla_bla_bla.txt -> gTTS = bla_bla_bla.mp3 + bla_bla_bla.jpg -> ffmpeg -> bla_bla_bla.mp4
-```
+![img](https://media.discordapp.net/attachments/907631182240436305/938193021927817266/Screen_Shot_2022-02-01_at_16.01.42.png)
 
 <h1>Want to use it?</h1>
 
