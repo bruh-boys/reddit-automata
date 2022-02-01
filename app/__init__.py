@@ -1,2 +1,2 @@
-from .divide_text.text import *
+from .text import *
 from .generate import *
