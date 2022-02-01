@@ -32,8 +32,14 @@ $ pip3 install -r requirements.txt
 <h1>Examples</h1>
 
 ```bash
-$ ./ra.py -s "discordapp/hot" -l en
+$ ./ra.py -s "confessions/hot" -l en 
 ```
+
+
+```bash
+$ ./ra.py -s "2b2t" -l en  -m true
+```
+https://user-images.githubusercontent.com/69026987/148291522-2bf5550d-6bdf-4057-8dba-f179547dff5b.mp4
 
 <img src="https://media.discordapp.net/attachments/786759600245309460/928214984771657788/unknown.png?width=631&height=432">
 
@@ -42,14 +48,10 @@ $ ./ra.py -s "discordapp/hot" -l en
 
 <h1>Example output:</h1>
 
-https://user-images.githubusercontent.com/69026987/148291522-2bf5550d-6bdf-4057-8dba-f179547dff5b.mp4
+
 
 <h1>TODO</h1>
 
 - [ ] get the data without auth?
 - [ ] better editing 
-- [x] manage errors
-
-
-
-
+- [ ] manage errors
