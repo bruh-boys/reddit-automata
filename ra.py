@@ -19,6 +19,8 @@ parser.add_argument('-l',
                     help='language to save the posts in',
                     type=str,
                     required=True)
+parser.add_argument('-m', '--meme', type=bool, default=False,
+                    help='generate only meme without text, just video and audio', required=False)
 args = parser.parse_args()
 
 
@@ -46,7 +48,8 @@ def main():
     # while the token is valid (~2 hours) we just add headers=headers to our requests
     requests.get('https://oauth.reddit.com/api/v1/me', headers=headers)
 
-    # ./ra.py -s subreddit -l language
+    # ./ra.py -s subreddit -l language -m true
+    # ./ra.py -s memes -l en
 
     res = requests.get(f"https://oauth.reddit.com/r/{args.subreddit}",
                        headers=headers)
@@ -94,11 +97,15 @@ def main():
             t.save(f'data/{x.replace("/"," ")}.mp3')
         else:
             print("no text")
+        # if ./ra.py -s subreddit -l language -m true
+        if args.meme:
+            convert_video(file,
+                          f'data/{x.replace("/"," ")}.mp3',
+                          f'data/{x.replace("/"," ")}.mp4')
+        else:
+            concat_all(history, 10, f'{x.replace("/"," ")}',
+                       400, 600, language=args.language)
 
-        convert_video(f'data/{x.replace("/"," ")}.jpg',
-                      f'data/{x.replace("/"," ")}.mp3',
-                      f'data/{x.replace("/"," ")}.mp4'
-                      )
         print("---------------------------------------------------------")
 
         for i in range(3):
