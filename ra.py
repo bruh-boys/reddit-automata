@@ -98,7 +98,7 @@ def main():
         else:
             print("no text")
         
-        concat_all(history,10,f'data/{x.replace("/"," ")}.mp4',400,600,language=args.language)
+        concat_all(history,10,f'{x.replace("/"," ")}',400,600,language=args.language)
         print("---------------------------------------------------------")
 
         for i in range(3):
