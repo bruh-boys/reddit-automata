@@ -35,6 +35,7 @@ $ pip3 install -r requirements.txt
 $ ./ra.py -s "confessions/hot" -l en 
 ```
 
+https://user-images.githubusercontent.com/69026987/152069667-d521d9ea-e739-4de5-940d-850714e8c9e0.mp4
 
 ```bash
 $ ./ra.py -s "2b2t" -l en  -m true
@@ -45,9 +46,6 @@ https://user-images.githubusercontent.com/69026987/148291522-2bf5550d-6bdf-4057-
 
 
 <img src="https://media.discordapp.net/attachments/786759600245309460/928217146654334976/unknown.png?width=223&height=432">
-
-<h1>Example output:</h1>
-
 
 
 <h1>TODO</h1>
