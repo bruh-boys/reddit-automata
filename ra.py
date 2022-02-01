@@ -25,8 +25,9 @@ args = parser.parse_args()
 
 
 def main():
+    # create the folder if doesent exists
     load_dotenv()
-    os.system("mkdir -p data")  # create the folder if doesent exists
+    os.system("mkdir -p data audio images video videos")  # create the folder if doesent exists
     auth = requests.auth.HTTPBasicAuth(os.getenv("ID"), os.getenv("SECRET"))
     data = {
         'grant_type': 'password',
