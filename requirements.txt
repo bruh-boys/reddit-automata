@@ -1,5 +1,5 @@
 gtts
-Pillow==9.0.0
+Pillow==9.0.1
 python-dotenv==0.19.0
 requests
 
